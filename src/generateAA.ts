@@ -16,8 +16,6 @@ const generateAA = async (file: string, maxWidth: number) => {
     const sharpStream = await Image.load(file);
     const { width, height } = { width: sharpStream.width, height: sharpStream.height };
 
-    sharpStream.grey().save("cat.png");
-
     const pixels = sharpStream.grey().getRGBAData();
     //@ts-ignore
     const minPixelValue = pixels.reduce((prev, cur) => Math.min(prev, cur), 100000000);
@@ -29,8 +27,6 @@ const generateAA = async (file: string, maxWidth: number) => {
         .getRGBAData()
         .filter((_, i) => i % 4 === 0)
         .map((pixel) => ((pixel - minPixelValue) / (maxPixelValue - minPixelValue)) * 255);
-
-    console.log(pixelArray);
 
     const scale = Math.ceil(width / maxWidth);
     for (let i = 0; i < height / (scale * 2); i++) {
