@@ -1,4 +1,4 @@
-import sharp from "sharp";
+import { Image } from "image-js";
 // ***default ascii Set "WM@QBGNROD&SE$Hm8Kg6ZU9%CwXAP0qpb3d52#VFaeh4koyYsTunzxJcL7>]<[?v{=}f1+j)(tIl^r|!i/~\"*;_-:',`. ";
 const COLOR_SET = "WM@QBGNROD&SEHm8TunzxJ><?=f1+t^r|/~\";_-:',`. ";
 const DEFAULT_WEIGHTED_MATRIX_MAP = [1, 0.25, 0.075, 0.005];
@@ -13,18 +13,26 @@ const generateAA = async (file: string, maxWidth: number) => {
         throw new Error("invalid maxWidth parameter.");
     }
     let resultString = "";
-    const sharpStream = sharp(file);
-    const { data, info } = await sharpStream
-        .clone()
-        .grayscale()
-        .linear(1, 0)
-        .normalise()
-        .raw()
-        .toBuffer({ resolveWithObject: true });
+    const sharpStream = await Image.load(file);
+    const { width, height } = { width: sharpStream.width, height: sharpStream.height };
 
-    const { width, height } = info;
+    sharpStream.grey().save("cat.png");
+
+    const pixels = sharpStream.grey().getRGBAData();
+    //@ts-ignore
+    const minPixelValue = pixels.reduce((prev, cur) => Math.min(prev, cur), 100000000);
+    //@ts-ignore
+    const maxPixelValue = pixels.reduce((prev: number, cur: number) => Math.max(prev, cur), 0);
+
+    const pixelArray = sharpStream
+        .grey()
+        .getRGBAData()
+        .filter((_, i) => i % 4 === 0)
+        .map((pixel) => ((pixel - minPixelValue) / (maxPixelValue - minPixelValue)) * 255);
+
+    console.log(pixelArray);
+
     const scale = Math.ceil(width / maxWidth);
-    const pixelArray = new Uint8ClampedArray(data.buffer);
     for (let i = 0; i < height / (scale * 2); i++) {
         for (let j = 0; j < width / scale; j++) {
             let sum = 0;
