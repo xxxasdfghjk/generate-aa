@@ -1,10 +1,16 @@
 {
     "name": "generate-aa",
+    "description": "generate aa by node",
     "version": "1.0.0",
-    "main": "generateAA.js",
+    "main": "./dist/src/generateAA.js",
+    "types": "./dist/src/generateAA.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "test": "yarn run ts-node ./test/generateAATest.ts",
-        "build": "yarn run tsc"
+        "build": "tsc",
+        "prepare": "npm run build"
     },
     "license": "MIT",
     "dependencies": {
@@ -16,5 +22,6 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.20"
-    }
+    },
+    "author": "xxxasdfhjk"
 }
