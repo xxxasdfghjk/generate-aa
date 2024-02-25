@@ -9,7 +9,7 @@
     ],
     "scripts": {
         "test": "yarn run ts-node ./test/generateAATest.ts",
-        "build": "tsc",
+        "build": "yarn run tsc",
         "prepare": "npm run build"
     },
     "license": "MIT",
@@ -17,7 +17,6 @@
         "image-js": "^0.35.5",
         "text-to-svg": "^3.1.5",
         "ts-node": "^10.9.2",
-        "tsc": "^2.0.4",
         "typescript": "^5.3.3"
     },
     "devDependencies": {
