@@ -8,7 +8,7 @@ const pixelToChar = (num: number) => {
     return COLOR_SET[Math.floor((num / 255) * COLOR_SET.length) - 1] ?? COLOR_SET[0];
 };
 
-const generateAA = async (file: string, maxWidth: number) => {
+const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: number) => {
     if (maxWidth <= 0) {
         throw new Error("invalid maxWidth parameter.");
     }
