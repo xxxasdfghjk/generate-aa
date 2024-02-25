@@ -29,8 +29,8 @@ const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: num
         .map((pixel) => ((pixel - minPixelValue) / (maxPixelValue - minPixelValue)) * 255);
 
     const scale = Math.ceil(width / maxWidth);
-    for (let i = 0; i < height / (scale * 2); i++) {
-        for (let j = 0; j < width / scale; j++) {
+    for (let i = 0; i < Math.floor(height / (scale * 2)); i++) {
+        for (let j = 0; j < Math.floor(width / scale); j++) {
             let sum = 0;
             let count = 0;
             for (let k = 0; k < scale * 2; k++) {
