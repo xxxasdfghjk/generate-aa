@@ -2,9 +2,6 @@ import { Image } from "image-js";
 // ***default ascii Set "WM@QBGNROD&SE$Hm8Kg6ZU9%CwXAP0qpb3d52#VFaeh4koyYsTunzxJcL7>]<[?v{=}f1+j)(tIl^r|!i/~\"*;_-:',`. ";
 const COLOR_SET = "WM@QBGNROD&SEHm8TunzxJ><?=f1+t^r|/~\";_-:',`. ";
 
-const pixelToChar = (num: number) => {
-    return COLOR_SET[Math.floor((num / 255) * COLOR_SET.length) - 1] ?? COLOR_SET[0];
-};
 type ResultType = {
     resultString: string;
     originImageWidth: number;

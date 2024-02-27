@@ -2,8 +2,8 @@
     "name": "generate-aa",
     "description": "generate aa by node",
     "version": "1.0.0",
-    "main": "./dist/src/generateAA.js",
-    "types": "./dist/src/generateAA.d.ts",
+    "main": "./dist/generateAA.js",
+    "types": "./dist/generateAA.d.ts",
     "files": [
         "dist"
     ],
@@ -20,7 +20,8 @@
         "typescript": "^5.3.3"
     },
     "devDependencies": {
-        "@types/node": "^20.11.20"
+        "@types/node": "^20.11.20",
+        "sharp": "^0.33.2"
     },
     "author": "xxxasdfhjk"
 }
