@@ -39,16 +39,18 @@ const generateAA = async (
         minPixelValue = Math.min(minPixelValue, rawData[i]);
         pixelArray.push(rawData[i]);
     }
-    for (let i = 0; i < gray.height / 2; i++) {
+    for (let i = 0; i < Math.floor(gray.height / 2); i++) {
         for (let j = 0; j < gray.width; j++) {
             const a1 = pixelArray[j + 2 * i * gray.width];
             const a2 = pixelArray[j + (2 * i + 1) * gray.width];
             // コントラストストレッチ
-            resultString += pixelToChar(
-                ((a1 - minPixelValue) / (maxPixelValue - minPixelValue) +
-                    (a2 - minPixelValue) / (maxPixelValue - minPixelValue)) *
-                    127.5
-            );
+            resultString += a2
+                ? pixelToChar(
+                      ((a1 - minPixelValue) / (maxPixelValue - minPixelValue) +
+                          (a2 - minPixelValue) / (maxPixelValue - minPixelValue)) *
+                          127.5
+                  )
+                : pixelToChar(((a1 - minPixelValue) / (maxPixelValue - minPixelValue)) * 255);
         }
         lineHeight += 1;
         resultString += "\n";
