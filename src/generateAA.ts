@@ -9,6 +9,8 @@ type ResultType = {
     resultString: string;
     originImageWidth: number;
     originImageHeight: number;
+    lineHeight: number;
+    lineWidth: number;
 };
 
 const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: number): Promise<ResultType> => {
@@ -25,6 +27,7 @@ const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: num
     let maxPixelValue = -99999999999;
     const rawData = gray.getRGBAData();
     const pixelArray = [];
+    let lineHeight = 0;
     // グレーは1チャンネルの値のみあれば十分
     for (let i = 0; i < rawData.length; i += 4) {
         maxPixelValue = Math.max(maxPixelValue, rawData[i]);
@@ -42,9 +45,10 @@ const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: num
                     127.5
             );
         }
+        lineHeight += 1;
         resultString += "\n";
     }
-    return { resultString, originImageWidth: width, originImageHeight: height };
+    return { resultString, originImageWidth: width, originImageHeight: height, lineHeight, lineWidth: gray.width };
 };
 
 export default generateAA;
