@@ -13,12 +13,20 @@ type ResultType = {
     lineWidth: number;
 };
 
-const generateAA = async (file: string | ArrayBuffer | Uint8Array, maxWidth: number): Promise<ResultType> => {
+const generateAA = async (
+    file: string | ArrayBuffer | Uint8Array,
+    maxWidth: number,
+    colorSet?: string
+): Promise<ResultType> => {
     if (maxWidth <= 0) {
         throw new Error("invalid maxWidth parameter.");
     }
     let resultString = "";
     const sharpStream = await Image.load(file);
+    const colorset = colorSet && colorSet.length > 1 ? colorSet : COLOR_SET;
+    const pixelToChar = (num: number) => {
+        return colorset[Math.floor((num / 255) * colorset.length) - 1] ?? colorset[0];
+    };
 
     const { width, height } = { width: sharpStream.width, height: sharpStream.height };
     const scale = maxWidth / width;
